@@ -4,6 +4,17 @@ int motor2_IN3=9;
 int motor2_IN4=10;
 
 char state;
+void loop(){
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(1000);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(1000);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration * .0343) / 2;
+  Serial.print("Distance: ");
+  Serial.println(distance);
+}
 void setup() 
 {
   pinMode(motor1_IN1,OUTPUT);
