@@ -56,6 +56,14 @@ void loop()
  while(Serial.available())
   {state=Serial.read();}
 
+  float read1=sensor_read1();
+  float read2=sensor_read2();
+  
+  if((3<read1<5)&&(3<read2<5))
+  {
+    state='R';
+  }
+  
   switch(state)
   {
     case 'F': {
