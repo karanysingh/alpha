@@ -25,35 +25,6 @@ void setup()
 
 }
 
-void Left()
-{
-  digitalWrite(motor1_IN1,LOW);
-  digitalWrite(motor1_IN2,HIGH);
-  digitalWrite(motor2_IN3,HIGH);
-  digitalWrite(motor2_IN4,LOW);
-}
-void Right()
-{
-  digitalWrite(motor1_IN1,HIGH);
-  digitalWrite(motor1_IN2,LOW);
-  digitalWrite(motor2_IN3,LOW);
-  digitalWrite(motor2_IN4,HIGH);
-}
-void Front()
-{
-  digitalWrite(motor1_IN1,HIGH);
-  digitalWrite(motor1_IN2,LOW);
-  digitalWrite(motor2_IN3,HIGH);
-  digitalWrite(motor2_IN4,LOW);
-}
-void Back()
-{
-  digitalWrite(motor1_IN1,LOW);
-  digitalWrite(motor1_IN2,HIGH);
-  digitalWrite(motor2_IN3,LOW);
-  digitalWrite(motor2_IN4,HIGH);
-}
-
 void loop()
 {
  while(Serial.available())
