@@ -6,9 +6,9 @@ int motor2_IN4=10;
 char state;
 void loop(){
   digitalWrite(trigPin, LOW);
-  delayMicroseconds(1000);
+  delayMicroseconds(200);
   digitalWrite(trigPin, HIGH);
-  delayMicroseconds(1000);
+  delayMicroseconds(200);
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
   distance = (duration * .0343) / 2;
