@@ -20,7 +20,7 @@ pinMode(motor1_IN2,OUTPUT);
 pinMode(motor2_IN3,OUTPUT);
 pinMode(motor2_IN4,OUTPUT);
 extern char state; // global variable 
-state = 'A';//no use in automatic transmission
+state = 'P';//no use in automatic transmission
 Serial.begin(9600); 
 }
 
@@ -34,11 +34,11 @@ void loop(){
   //Executing a bot action on the basis of decision(Automatic Transmission)
   char mode = 'A';
   if(decision_final=='1'){
-    state = 'L';//for left turn
+    state = 'A';//for left turn
   }else if(decision_final=='2'){
-    state = 'R'; //for right turn
+    state = 'D'; //for right turn
   }else{
-    state = 'F';
+    state = 'W';
   }
   execution(state,mode);
   
@@ -131,26 +131,26 @@ void execution(char state,char mode){
   }
 }else if(mode == 'A'){
   switch(state)
-  {
-    case 'F': {
+  {//WASD control
+    case 'W': {
   digitalWrite(motor1_IN1,HIGH);
   digitalWrite(motor1_IN2,LOW);
   digitalWrite(motor2_IN3,HIGH);
   digitalWrite(motor2_IN4,LOW);
 }
-    case 'L': { 
+    case 'A': { 
   digitalWrite(motor1_IN1,HIGH);
   digitalWrite(motor1_IN2,LOW);
   digitalWrite(motor2_IN3,LOW);
   digitalWrite(motor2_IN4,HIGH);
     }
-    case 'R': {
+    case 'D': {
   digitalWrite(motor1_IN1,HIGH);
   digitalWrite(motor1_IN2,LOW);
   digitalWrite(motor2_IN3,LOW);
   digitalWrite(motor2_IN4,HIGH);
 }
-    case 'B': {
+    case 'S': {
   digitalWrite(motor1_IN1,LOW);
   digitalWrite(motor1_IN2,HIGH);
   digitalWrite(motor2_IN3,LOW);
