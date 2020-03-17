@@ -10,5 +10,5 @@ Tested using the app 'Arduino Bluetooth control'
 * `A` for rotate left
 * `S` for backward
 * `D` for rotate right
-* 'M' for manual transmission
-* 'Q' for automatic transmission
+* `M` for manual transmission
+* `Q` for automatic transmission
