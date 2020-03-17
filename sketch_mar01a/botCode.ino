@@ -8,8 +8,7 @@ long duration_0,duration_90,l,f;
 int distance_0,distance_90;
 int ll,hl;
 char state;
-
-
+char mode;
 void setup() {
 pinMode(trigPin_0, OUTPUT); 
 pinMode(echoPin_0, INPUT); 
@@ -19,27 +18,36 @@ pinMode(motor1_IN1,OUTPUT);
 pinMode(motor1_IN2,OUTPUT);
 pinMode(motor2_IN3,OUTPUT);
 pinMode(motor2_IN4,OUTPUT);
-extern char state; // global variable 
+
+extern char mode;
+extern char state; // global variable
+mode='A'; 
 state = 'P';//no use in automatic transmission
 Serial.begin(9600); 
 }
 
 void loop(){
+   trans();
+   if(mode=='M'){
+   state = Serial.read(); // Reads the data from the serial por
   //getting data from ultrasonic sensors by calling read()
+   }
+  else{
   distance_90,distance_0 = read();
   
   //Taking decision on the basis of sensor values
   int decision_final = decision(distance_90,distance_0);
   
   //Executing a bot action on the basis of decision(Automatic Transmission)
-  char mode = 'A';
   if(decision_final=='1'){
     state = 'A';//for left turn
   }else if(decision_final=='2'){
     state = 'D'; //for right turn
   }else{
     state = 'W';
-  }
+  }}
+//  Serial.println("This is state - > ");
+//  Serial.print(state);
   execution(state,mode);
   
   // Serial.print("Distance: ");
@@ -49,6 +57,22 @@ void loop(){
   // Serial.println();
 
 }
+
+//checks whether manual or automatic transmission
+void trans(){
+  char temp = Serial.read();
+//  Serial.println("This is serial");
+//  Serial.println(temp);
+  if(temp=='M'){
+  mode = 'M';
+  Serial.println("Shifted to manual!!!");
+  }
+  if(temp=='Q'){
+    mode='A';
+    Serial.println("Shifted to Automatic!!");
+    }
+    }
+
 int read(){//method to read value from the ultrasonic sensors
   
   //first ultrasonic sensor
@@ -99,37 +123,43 @@ int decision(long l, long f){
 //Method responsible for controlling motors
 void execution(char state,char mode){
   if(mode=='M'){
- while(Serial.available())
-  {state=Serial.read();
   switch(state)
   {
-    case 'F': {
+    case 'W': {
+  Serial.println("Forward");
   digitalWrite(motor1_IN1,HIGH);
   digitalWrite(motor1_IN2,LOW);
   digitalWrite(motor2_IN3,HIGH);
   digitalWrite(motor2_IN4,LOW);
+  break;
 }
-    case 'L': { 
+    case 'A': { 
+  Serial.println("Rotate Left");
   digitalWrite(motor1_IN1,HIGH);
   digitalWrite(motor1_IN2,LOW);
   digitalWrite(motor2_IN3,LOW);
   digitalWrite(motor2_IN4,HIGH);
+  break;
     }
-    case 'R': {
+    case 'D': {
+  Serial.println("Rotate Right");
   digitalWrite(motor1_IN1,HIGH);
   digitalWrite(motor1_IN2,LOW);
   digitalWrite(motor2_IN3,LOW);
   digitalWrite(motor2_IN4,HIGH);
+  break;
 }
-    case 'B': {
+    case 'S': {
+  Serial.println("Backward");
   digitalWrite(motor1_IN1,LOW);
   digitalWrite(motor1_IN2,HIGH);
   digitalWrite(motor2_IN3,LOW);
   digitalWrite(motor2_IN4,HIGH);
+  break;
 }
   }
   }
-}else if(mode == 'A'){
+else if(mode == 'A'){
   switch(state)
   {//WASD control
     case 'W': {
@@ -159,4 +189,3 @@ void execution(char state,char mode){
   }
 }
 }
-
